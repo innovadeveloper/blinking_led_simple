@@ -1,41 +1,45 @@
 #include <Arduino.h>
+#include <network/wifi_manager.h>
+#include <listener/button_listener.h>
+#include <client/udp_client.h>
+
 
 #define BUTTON_PIN 15 // D15
 #define LED_PIN 2
 
-int lastState = HIGH;
+// const char* ssid = "SAGITARIO";
+// const char* password = "5461T4R10";
+const char* ssid = "OnePlus12";
+const char* password = "123456789a";
+
+const char* udpAddress = "190.102.144.223";
+int portAddress = 2028;
+
+void onButtonChangeState(bool isPressed) {
+  Serial.print("[BOTON] PRESSED ");
+  Serial.println(isPressed);
+
+  // remember that 'String' is not efficient...
+  String msg = "pressed=" + String(isPressed);
+  sendUDP(msg);
+}
+
 void setup()
 {
   Serial.begin(115200);
   delay(1000);
 
-  // pinMode(BUTTON_PIN, INPUT); // pull-down EXTERNO
-  pinMode(BUTTON_PIN, INPUT_PULLUP); // pull-down EXTERNO
-  pinMode(LED_PIN, OUTPUT);
+  setupButton(BUTTON_PIN, LED_PIN);
 
-  Serial.println("ESP32 listo. Presiona el botón (GPIO 15).");
+  initWiFiEvents();
+  connectWiFi(ssid, password);
+
+  setupUDPClient(udpAddress, portAddress);
 }
 
 void loop()
 {
-  int currentState = digitalRead(BUTTON_PIN);
-
-  if (currentState != lastState)
-  {
-    if (currentState == LOW)
-    {
-      Serial.println("[BOTON] PRESIONADO");
-      digitalWrite(LED_PIN, HIGH);
-    }
-    else
-    {
-      Serial.println("[BOTON] LIBERADO");
-      digitalWrite(LED_PIN, LOW);
-    }
-    delay(50);
-  }
-
-  lastState = currentState;
+  onButtonCallback(onButtonChangeState);
 }
 
 // pull down externo vs pull up interno
