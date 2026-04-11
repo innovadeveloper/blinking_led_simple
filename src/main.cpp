@@ -11,10 +11,10 @@
 #define BUTTON_PIN 15 // D15
 #define LED_PIN 2
 
-// const char* ssid = "SAGITARIO";
-// const char* password = "5461T4R10";
-const char* ssid = "OnePlus12";
-const char* password = "123456789a";
+const char* ssid = "SAGITARIO";
+const char* password = "5461T4R10";
+// const char* ssid = "OnePlus12";
+// const char* password = "123456789a";
 
 const char* udpAddress = "190.102.144.223";
 int portAddress = 2028;
