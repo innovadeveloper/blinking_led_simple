@@ -3,17 +3,19 @@
 int lastState = HIGH; // last state because we are using input pull up (intern)
 int buttonPinLocally = 0;
 int ledPinLocally = 0;
+void (*buttonPressedCallback)(bool) = nullptr;
 
-void setupButton(int buttonPin, int ledPin)
+void setupButton(int buttonPin, int ledPin, void (*callback)(bool isPressed))
 {
     buttonPinLocally = buttonPin;
     ledPinLocally = ledPin;
 
+    buttonPressedCallback = callback;
     pinMode(buttonPinLocally, INPUT_PULLUP); // pull-down EXTERNO
     pinMode(ledPinLocally, OUTPUT);
 }
 
-void onButtonCallback(void (*callback)(bool isPressed))
+void onButtonCallback()
 {
     int currentState = digitalRead(buttonPinLocally);
 
@@ -23,11 +25,11 @@ void onButtonCallback(void (*callback)(bool isPressed))
         {
             // Serial.println("[BOTON] PRESIONADO");
             digitalWrite(ledPinLocally, HIGH);
-            callback(true);
+            buttonPressedCallback(true);
         }
         else
         {
-            callback(false);
+            buttonPressedCallback(false);
             // Serial.println("[BOTON] LIBERADO");
             digitalWrite(ledPinLocally, LOW);
         }
