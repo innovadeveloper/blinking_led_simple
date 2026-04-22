@@ -17,6 +17,12 @@ void setupGPSDriver(unsigned long baud, int8_t rxPin, int8_t txPin, const int tr
 // solo bloquea si es q hay data disponible dentro del modem gps, y ese bloqueo crecerá segun el buffer...
 void readLocationAvailable()
 {
+    // while (SerialGPS.available())
+    // {
+    //     char c = SerialGPS.read();
+    //     Serial.write(c);  //  imprime NMEA crudo
+    // }
+
     while (SerialGPS.available())
     {
         gps.encode(SerialGPS.read());
@@ -45,3 +51,6 @@ void readLocationAvailable()
         }
     }
 }
+
+
+    

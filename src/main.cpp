@@ -20,11 +20,11 @@
 
 // const char *ssid = "SAGITARIO";
 // const char *password = "5461T4R10";
-const char *ssid = "OnePlus12";
-const char *password = "123456789a";
+const char *ssid = "FnC";
+const char *password = "12345678";
 
-const char *udpAddress = "190.102.144.223";
-int portAddress = 2028;
+const char *udpAddress = "178.156.133.161";
+int portAddress = 9007;
 
 void onButtonChangeState(bool isPressed)
 {
