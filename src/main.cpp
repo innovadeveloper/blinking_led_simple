@@ -10,6 +10,7 @@
 #include <client/udp_client.h>
 #include <client/http_client.h>
 #include <drivers/gps_driver.h>
+#include "apdu_handler.h"
 
 #define BUTTON_PIN 15 // D15
 #define LED_PIN 2
@@ -30,6 +31,8 @@ const char *password = "123456789a";
 
 const char *udpAddress = "178.156.133.161";
 int portAddress = 9007;
+
+APDUHandler* apduHandler = nullptr;
 
 void onButtonChangeState(bool isPressed)
 {
@@ -77,6 +80,13 @@ void setup()
   setupUDPClient(udpAddress, portAddress);
   setupGPSDriver(9600, RX2_PIN, TX2_PIN, TRACK_INTERVAL, onLocationAvailable);
 
+  // Initialize APDU handler for uFCoder
+  apduHandler = new APDUHandler();
+  if (apduHandler->initReader()) {
+    Serial.println("uFCoder reader initialized for APDU capture");
+  } else {
+    Serial.println("Warning: uFCoder reader not available");
+  }
 
   // NEW CONFIGURATION EXPRESS
   pinMode(LED_001_PIN, OUTPUT);

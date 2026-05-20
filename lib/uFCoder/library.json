@@ -1,0 +1,36 @@
+{
+  "name": "uFCoder",
+  "version": "6.0.6",
+  "description": "D-Logic uFCoder library for ESP32 - RFID/NFC reader communication",
+  "keywords": "rfid, nfc, reader, apdu, esp32",
+  "authors": [
+    {
+      "name": "D-Logic",
+      "maintainer": true
+    }
+  ],
+  "license": "Proprietary",
+  "homepage": "https://d-logic.net/",
+  "frameworks": ["arduino", "espidf"],
+  "platforms": ["espressif32"],
+  "build": {
+    "flags": [
+      "-Wno-pragmas",
+      "-Wno-unused-variable", 
+      "-Wno-maybe-uninitialized",
+      "-Wno-implicit-function-declaration",
+      "-mlongcalls",
+      "-Wno-type-limits",
+      "-Wno-implicit-fallthrough",
+      "-Wno-format-overflow",
+      "-Wno-comment",
+      "-Wno-format-truncation",
+      "-Wno-array-bounds",
+      "-DDEBUG_PRINT=0",
+      "-D_NO_FTDI=1",
+      "-DESP_PLATFORM=1"
+    ],
+    "libArchive": false,
+    "srcFilter": ["+<src/>", "+<include/>"]
+  }
+}
